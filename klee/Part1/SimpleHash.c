@@ -1,9 +1,9 @@
-/* 
+/*
  * Simple Hash Reversal Lab
  *
  * From:
  *   sfold hash function sourced from https://research.cs.vt.edu/AVresearch/hashing/strings.php
- *   
+ *
  *
  * Author: Justin Dunnaway
  * Modified by: Michael D. Brown
@@ -56,18 +56,20 @@ long long int sfold(char * message, int length) {
         }
 }
 
-int main(int argc, char *argv[])
-{
-        long int length = strlen(argv[1]);
+int main(int argc, char *argv[]) {
+    long int length = strlen(argv[1]);
 
-        // TODO: Add KLEE constraints here
+    for (int i = 0; i < 20; i++) {
+        char c = argv[1][i];
+        klee_assume((c >= '0' & c <= '9') |
+                    (c >= 'A' & c <= 'Z') |
+                    (c >= 'a' & c <= 'z'));
+    }
 
-        long int hash = sfold(argv[1], length);
+    long int hash = sfold(argv[1], length);
+    klee_assert(hash != 13365056);
 
-        // TODO: Add KLEE asserts here for checking the hash result
-
-	printf("The computed hash value is: %ld .\n", hash);
-
-        return 0;
+    printf("The computed hash value is: %ld .\n", hash);
+    return 0;
 }
 
