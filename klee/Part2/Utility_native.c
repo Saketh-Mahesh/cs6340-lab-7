@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <klee/klee.h>
+// #include <klee/klee.h>
 
 char* U = "Usage: ubelt -acghotx <param1> <param2>\n\
 	   a - list files in current folder: if param1 found, it will show only that file. ignores param2\n\
@@ -70,14 +70,11 @@ void t(char* a1, char* a2, int a3) { if (a1 && strlen(a1) && a2 && strlen(a2)) {
 void x(char* a1, char* a2, int a3) { if (a1 && strlen(a1)) { sprintf(cm, "unzip %s", a1); cs(cm, a1, a2, a3); } }
 
 int main(int argc, char** a2, char** a3) {
-	klee_assume(a2[1][0] == '-');
-	klee_assume(a2[1][2] == '-');
-	klee_assume(strlen(a2[1]) == 3);
-	klee_assume((a2[1][1] == 'a') | (a2[1][1] == 'c') | (a2[1][1] == 'g') |
-        (a2[1][1] == 'h') | (a2[1][1] == 'o') | (a2[1][1] == 't') |
-        (a2[1][1] == 'x'));
-
-	klee_assert(0);
+	// klee_assume(argv[1][0] == '-');
+	// klee_assume(a2[1][2] == '-');
+	// klee_assume((a2[1][1] == 'a') | (a2[1][1] == 'c') | (a2[1][1] == 'g') |
+    //     (a2[1][1] == 'h') | (a2[1][1] == 'o') | (a2[1][1] == 't') |
+    //     (a2[1][1] == 'x'));
 	int cb = 0;
 	if (argc >= 2 && argc < 5) {
 		char P[8];
@@ -97,4 +94,6 @@ int main(int argc, char** a2, char** a3) {
 	else { cb = 1; }
 
 	if (cb) { printf("%s", U); }
+
+	// klee_assert(0);
 }
